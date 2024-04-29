@@ -1,3 +1,5 @@
+# pavithra s
+# 212223220072
 # Ex-8-RECOGNITION-OF-THE-GRAMMAR-anb-where-n-10-USING-YACC
 RECOGNITION OF THE GRAMMAR(anb where n>=10) USING YACC
 # Date:
@@ -13,7 +15,73 @@ To write a YACC program to recognize the grammar anb where n>=10.
 7.	Compile these with the C compiler as gcc lex.yy.c y.tab.c
 8.	Enter a string as input and it is identified as valid or invalid.
 # PROGRAM:
+```
+Program name: anb.l
+
+%{
+
+/*Lex Program for anb(n>=10)*/ #include "y.tab.h"
+%}
+
+%%
+
+a {return A;} b {return B;}
+. {return yytext[10];}
+
+\n return('\n');
+
+%%
+
+int yywrap()
+
+{
+
+return 1;
+
+}
+
+Program name:anb.y
+
+%{
+
+/*YACC program for recognising anb(n>=10)*/
+
+%}
+
+%token A B
+
+%%
+
+stmt: A A A A A A A A A A anb '\n'{printf("\n Valid string"); return 0;
+}
+
+;
+
+anb:A anb
+
+|A B
+
+;
+
+%%
+
+main()
+
+{
+
+printf("\nEnter some valid string\n"); yyparse();
+}
+
+int yyerror(char*s)
+
+{
+
+printf("\nInvalid string\n");
+
+}
+```
 # OUTPUT
+[root@localhost]# lex anb.1 [root@localhost]# yacc -d anb.y [root@localhost]# gcc lex.yy.c y.tab.c [root@localhost]# ./a.out Enter some valid string aaaaaaaaab Invalid string [root@localhost]# ./a.out Enter some valid string aaaaaaaaaaab Valid string
 # RESULT
 The YACC program to recognize the grammar anb where n>=10 is executed successfully and the output is verified.
  
